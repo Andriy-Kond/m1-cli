@@ -1,4 +1,6 @@
 import { program } from "commander";
+import * as dbProcessing from "./contacts.js";
+
 program
   .option("-a, --action <type>", "choose action")
   .option("-i, --id <type>", "user id")
@@ -14,19 +16,29 @@ const options = program.opts();
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      // ...
+      console.log("readAllContacts()", await dbProcessing.readAllContacts());
       break;
 
     case "get":
-      // ... id
+      console.log("getContactById(id)", await dbProcessing.getContactById(id));
       break;
 
     case "add":
-      // ... name email phone
+      console.log(
+        "addNewContact(name, email, phone)",
+        await dbProcessing.addNewContact(name, email, phone),
+      );
       break;
 
     case "remove":
-      // ... id
+      console.log("deleteContact(id)", await dbProcessing.deleteContact(id));
+      break;
+
+    case "edit":
+      console.log(
+        "editContact(action, id, name, email, phone)",
+        await dbProcessing.editContact(action, id, name, email, phone),
+      );
       break;
 
     default:
